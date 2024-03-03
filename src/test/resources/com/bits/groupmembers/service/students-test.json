@@ -1,0 +1,30 @@
+{
+    "students": [
+        {
+            "studentId": "12345",
+            "email": "12345@wilp.bits-pilani.ac.in",
+            "fullName": "test name 1",
+            "electiveCourses": [
+            "Devops"
+            ]
+        },
+        {
+            "studentId": "56789",
+            "email": "56789@wilp.bits-pilani.ac.in",
+            "fullName": "test name 2",
+            "electiveCourses": [
+            "Security",
+            "Scalable services",
+            "Devops"
+            ]
+        }, 
+        {
+            "studentId": "24680",
+            "email": "24680@wilp.bits-pilani.ac.in",
+            "fullName": "test name 3",
+            "electiveCourses": [
+            "Security"
+            ]
+        }                 
+    ]
+}
