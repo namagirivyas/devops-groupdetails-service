@@ -1,0 +1,33 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.15'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.bits.sample'
+version = '1.0.0'
+
+java {
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+}
+
+def lombokVersion = "1.18.28"
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.projectlombok:lombok:${lombokVersion}"
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations'	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
