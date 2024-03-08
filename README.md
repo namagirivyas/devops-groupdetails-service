@@ -1,2 +1,2 @@
-# groupmembers-service
-Group members details
+# groupdetails-service
+Group details
