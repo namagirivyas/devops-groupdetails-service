@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'jacoco'	
+	id 'org.springframework.boot' version '2.7.15'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.bits.groupdetails'
+version = '1.0.0'
+
+java {
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
+}
+
+repositories {
+  maven {
+    url = uri("https://repo.maven.apache.org/maven2")
+    credentials {
+      username = project.findProperty("gpr.user") ?: System.getenv("GRADLE_TOKEN")
+      password = System.getenv("GRADLE_TOKEN")
+    }
+  }
+}
+
+def lombokVersion = "1.18.28"
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.projectlombok:lombok:${lombokVersion}"
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations'	
+	implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Add JUnit Jupiter and Mockito dependencies for testing
+    testImplementation 'junit:junit:4.13.2'
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.mockito:mockito-core'	
+    
+}
+
+jacocoTestReport {
+	afterEvaluate {
+		classDirectories.setFrom(classDirectories.files.collect {
+			fileTree(dir: it, exclude:['com/bits/groupdetails/controller','com/bits/groupdetails/dto'])
+		})
+	}
+	reports {
+		xml.enabled true
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

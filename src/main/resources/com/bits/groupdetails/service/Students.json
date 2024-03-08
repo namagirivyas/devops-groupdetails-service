@@ -1,0 +1,21 @@
+{
+    "students": [
+        {
+            "studentId": "2023mt03168",
+            "email": "2023mt03168@wilp.bits-pilani.ac.in",
+            "fullName": "Namagiri Vyas",
+            "electiveCourses": [
+            "Devops",
+            "Security Fundamentals For Cloud"
+            ]
+        },
+        {
+            "studentId": "2023mt03076",
+            "email": "2023mt03076@wilp.bits-pilani.ac.in",
+            "fullName": "Mufaddal Saifee",
+            "electiveCourses": [
+            "Security Fundamentals For Cloud"
+            ]
+        }        
+    ]
+}
