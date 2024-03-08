@@ -5,11 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Getter
-//@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StudentInfoDto implements Serializable {
 	/**
