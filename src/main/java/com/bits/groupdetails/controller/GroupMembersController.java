@@ -28,5 +28,10 @@ public class GroupMembersController {
 	public List<StudentInfoDto> getAllGroupMembersForGivenElectives(@PathVariable("electives") String electives) {
 		return this.groupMembersService.getAllGroupMembersForGivenElectives(electives);
 	}
+	
+	@GetMapping("/student/{studentId}")
+	public StudentInfoDto getStudentInfo(@PathVariable("studentId") String studentId) {
+		return this.groupMembersService.getStudentInfo(studentId);
+	}
 
 }
