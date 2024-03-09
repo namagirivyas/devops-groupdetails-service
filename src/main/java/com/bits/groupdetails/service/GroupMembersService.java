@@ -3,6 +3,7 @@ package com.bits.groupdetails.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +16,8 @@ import com.bits.groupdetails.dto.StudentInfoDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
+
+import static java.util.Collections.EMPTY_LIST;
 
 @Service
 @Slf4j
@@ -44,23 +47,21 @@ public class GroupMembersService {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
-		List<StudentInfoDto> studentInfoForElectives = getAllGroupMembersFrom(electives, file);
-		return studentInfoForElectives;
+		return getAllGroupMembersFrom(electives, file);
 	}
 	
 	public List<StudentInfoDto> getAllGroupMembersFrom(String electives, File sourceData) {
-		List<StudentInfoDto> studentInfoForElectives = new ArrayList<>();
 
 		try {
 			GroupMembersInfoDto groupMembersInfoDto = mapper.readValue(sourceData, GroupMembersInfoDto.class);
 			List<StudentInfoDto> studentInfoDtoList = groupMembersInfoDto.getStudents();
 			
-			studentInfoForElectives = studentInfoDtoList.stream().filter(a -> a.getElectiveCourses().contains(electives)).collect(Collectors.toList());
+			return studentInfoDtoList.stream().filter(a -> a.getElectiveCourses().contains(electives)).collect(Collectors.toList());
 		} catch (IOException e) {
 			// Ignore
 			log.error("Error occured while getting group members details based on electives", e);
 		}
-		return studentInfoForElectives;
+		return new ArrayList<>();
 	}
 
 	public StudentInfoDto getStudentInfo(String studentId) {

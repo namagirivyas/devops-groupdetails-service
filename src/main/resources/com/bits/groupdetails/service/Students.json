@@ -16,6 +16,14 @@
             "electiveCourses": [
             "Security Fundamentals For Cloud"
             ]
-        }        
+        }, {
+            "studentId": "2023mt03006",
+            "email": "2023mt03006@wilp.bits-pilani.ac.in",
+            "fullName": "Kumaravel T",
+            "electiveCourses": [
+                "Devops",
+                "Security Fundamentals For Cloud"
+            ]
+        }
     ]
 }
