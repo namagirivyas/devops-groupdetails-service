@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,16 @@ public class GroupMembersService {
 
 		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
 		try {
-//			log.info("Reading student information from JSON file");
 			groupMembersInfoDto = mapper.readValue(file, GroupMembersInfoDto.class);
 
 		} catch (IOException e) {
-//			log.error("Error occured while reading student information", e);
+			// Ignore
+			log.error("Error occured while getting group members details", e);
 		}
 		return groupMembersInfoDto;
 	}
 
 	public List<StudentInfoDto> getAllGroupMembersForGivenElectives(String electives) {
-//		ObjectMapper mapper = new ObjectMapper();
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
@@ -52,16 +52,37 @@ public class GroupMembersService {
 		List<StudentInfoDto> studentInfoForElectives = new ArrayList<>();
 
 		try {
-//			log.info("Reading student information from JSON file");
 			GroupMembersInfoDto groupMembersInfoDto = mapper.readValue(sourceData, GroupMembersInfoDto.class);
 			List<StudentInfoDto> studentInfoDtoList = groupMembersInfoDto.getStudents();
 			
-//			log.info("Retrieve student info for given electives {}", electives);
 			studentInfoForElectives = studentInfoDtoList.stream().filter(a -> a.getElectiveCourses().contains(electives)).collect(Collectors.toList());
 		} catch (IOException e) {
-//			log.error("Error occured while reading student information", e);
+			// Ignore
+			log.error("Error occured while getting group members details based on electives", e);
 		}
 		return studentInfoForElectives;
+	}
+
+	public StudentInfoDto getStudentInfo(String studentId) {
+		ClassLoader classLoader = getClass().getClassLoader();
+		StudentInfoDto studentInfoToReturn = null;
+
+		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
+		try {
+			GroupMembersInfoDto groupMembersInfoDto = mapper.readValue(file, GroupMembersInfoDto.class);
+			List<StudentInfoDto> studentInfoDtoList = groupMembersInfoDto.getStudents();
+			
+			Optional<StudentInfoDto> studentInfoOptional = studentInfoDtoList.stream().filter(a -> a.getStudentId().equalsIgnoreCase(studentId)).findFirst();
+			if(studentInfoOptional.isPresent()) {
+				studentInfoToReturn = studentInfoOptional.get();
+			} else {
+				log.warn("Student {} not found", studentId );
+			}
+		} catch (IOException e) {
+			// Ignore
+			log.error("Error occured while getting student information based on studentId", e);
+		}
+		return studentInfoToReturn;
 	}
 
 }
