@@ -56,4 +56,12 @@ jacocoTestReport {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy testSummary
+}
+
+task testSummary {
+    doLast {
+        def testResults = project.tasks.test.reports.junitXml.destination
+        println "Test results are available at: $testResults"
+    }
 }
