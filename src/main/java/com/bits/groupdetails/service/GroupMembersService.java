@@ -38,7 +38,7 @@ public class GroupMembersService {
 
 		} catch (IOException e) {
 			// Ignore
-			log.error("Error occured while getting group members details", e);
+			// log.error("Error occured while getting group members details", e); 
 		}
 		return groupMembersInfoDto;
 	}
@@ -59,7 +59,7 @@ public class GroupMembersService {
 			return studentInfoDtoList.stream().filter(a -> a.getElectiveCourses().contains(electives)).collect(Collectors.toList());
 		} catch (IOException e) {
 			// Ignore
-			log.error("Error occured while getting group members details based on electives", e);
+			// log.error("Error occured while getting group members details based on electives", e);
 		}
 		return new ArrayList<>();
 	}
@@ -77,11 +77,12 @@ public class GroupMembersService {
 			if(studentInfoOptional.isPresent()) {
 				studentInfoToReturn = studentInfoOptional.get();
 			} else {
-				log.warn("Student {} not found", studentId );
+				// log.warn("Student {} not found", studentId );
+                                 System.out.println("StudentId " + studentId + " not found");
 			}
 		} catch (IOException e) {
 			// Ignore
-			log.error("Error occured while getting student information based on studentId", e);
+			// log.error("Error occured while getting student information based on studentId", e);
 		}
 		return studentInfoToReturn;
 	}
