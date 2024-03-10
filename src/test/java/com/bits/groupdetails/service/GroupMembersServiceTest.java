@@ -7,8 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,7 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.bits.groupdetails.dto.GroupMembersInfoDto;
 import com.bits.groupdetails.dto.StudentInfoDto;
-import com.bits.groupdetails.service.GroupMembersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,18 +54,18 @@ public class GroupMembersServiceTest {
 		}
 	}
 
-//	@Test
-//	public void testGetStudentInfo() {
-//		try {
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			GroupMembersInfoDto groupMembersInfoDto = objectMapper.readValue(file, GroupMembersInfoDto.class);
-//			when(mapper.readValue(file, GroupMembersInfoDto.class)).thenReturn(groupMembersInfoDto);
-//			StudentInfoDto studentInfoDto = groupMembersService.getStudentInfo("24680");
-//			assertTrue(studentInfoDto.getStudentId().equals("24680"));
-//			assertTrue(studentInfoDto.getElectiveCourses().contains("Devops"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@Test
+	public void testGetStudentInfo() {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			GroupMembersInfoDto groupMembersInfoDto = objectMapper.readValue(file, GroupMembersInfoDto.class);
+			when(mapper.readValue(file, GroupMembersInfoDto.class)).thenReturn(groupMembersInfoDto);
+			StudentInfoDto studentInfoDto = groupMembersService.getStudentInfo("24680");
+			assertTrue(studentInfoDto.getStudentId().equals("24680"));
+			assertTrue(studentInfoDto.getElectiveCourses().contains("Devops"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
