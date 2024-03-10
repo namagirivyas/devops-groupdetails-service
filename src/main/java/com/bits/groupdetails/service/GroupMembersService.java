@@ -64,13 +64,11 @@ public class GroupMembersService {
 		return new ArrayList<>();
 	}
 
-	public StudentInfoDto getStudentInfo(String studentId) {
-		ClassLoader classLoader = getClass().getClassLoader();
+	public StudentInfoDto getStudentInfoFrom(String studentId, File sourceData) {
 		StudentInfoDto studentInfoToReturn = null;
 
-		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
 		try {
-			GroupMembersInfoDto groupMembersInfoDto = mapper.readValue(file, GroupMembersInfoDto.class);
+			GroupMembersInfoDto groupMembersInfoDto = mapper.readValue(sourceData, GroupMembersInfoDto.class);
 			List<StudentInfoDto> studentInfoDtoList = groupMembersInfoDto.getStudents();
 			
 			Optional<StudentInfoDto> studentInfoOptional = studentInfoDtoList.stream().filter(a -> a.getStudentId().equalsIgnoreCase(studentId)).findFirst();
@@ -85,6 +83,13 @@ public class GroupMembersService {
 			// log.error("Error occured while getting student information based on studentId", e);
 		}
 		return studentInfoToReturn;
+	}
+
+	public StudentInfoDto getStudentInfo(String studentId) {
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		File file = new File(classLoader.getResource("com/bits/groupdetails/service/Students.json").getFile());
+		return getStudentInfoFrom(studentId, file);
 	}
 
 }
