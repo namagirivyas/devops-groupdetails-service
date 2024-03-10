@@ -1,12 +1,20 @@
 plugins {
 	id 'java'
 	id 'jacoco'	
+	id 'checkstyle'
 	id 'org.springframework.boot' version '2.7.15'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.bits.groupdetails'
 version = '1.0.0'
+
+checkstyle {
+  toolVersion = '8.45'
+  configFile = file("${rootProject.projectDir}/config/checkstyle/google_checks.xml")
+  ignoreFailures = false
+  showViolations = true
+}
 
 java {
 	sourceCompatibility = '17'
@@ -61,3 +69,5 @@ jacocoTestReport {
 test{
 	useJUnitPlatform()
 }
+
+check.dependsOn 'checkstyleMain' 
