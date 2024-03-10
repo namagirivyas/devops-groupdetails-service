@@ -84,3 +84,27 @@ jobs:
         GRADLE_OPTS: '-Dorg.gradle.daemon=false'
         GRADLE_USER_HOME: './gradle'
         PAT: ${{env.GRADLE_TOKEN}}
+  
+  scan:
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+      GRADLE_TOKEN: ${{secrets.GRADLE_TOKEN}}    
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17'      
+
+    - name: Sonarcloud scan
+      run: |
+        chmod +x ./gradlew && 
+        ./gradlew clean build jacocoTestReport jacocoTestCoverageVerification sonarqube -Dsonar.organization=sawlemon-sonar-key -Dsonar.projectKey=sawlemon-sonar-key_sonarcloud-bits-project -Dsonar.host.url='https://sonarcloud.io' -Dsonar.token=a2be272d04c9be30f691c7f968d05633f5647270
+      env:
+        SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+        GRADLE_TOKEN: ${{secrets.GRADLE_TOKEN}}
