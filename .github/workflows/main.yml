@@ -34,6 +34,31 @@ jobs:
         GRADLE_USER_HOME: './gradle'
         PAT: ${{env.GRADLE_TOKEN}}
         
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      GRADLE_TOKEN: ${{secrets.GRADLE_TOKEN}}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Build with checkstyle
+      run: |
+        chmod +x ./gradlew && 
+        ./gradlew checkstyleMain
+        
+      env:
+        GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+        GRADLE_USER_HOME: './gradle'
+        PAT: ${{env.GRADLE_TOKEN}}
+  
   test:
     runs-on: ubuntu-latest
     env:
