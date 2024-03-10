@@ -37,7 +37,7 @@ public class GroupMembersServiceTest {
 
 		file = new File(classLoader.getResource("com/bits/groupdetails/service/students-test.json").getFile());
 //        ReflectionTestUtils.setField(groupMembersService,"mapper",mapper);
-//        groupMembersService = new GroupMembersService();
+        groupMembersService = new GroupMembersService();
         MockitoAnnotations.openMocks(this);
     }
 	
