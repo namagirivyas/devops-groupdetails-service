@@ -79,6 +79,7 @@ public class GroupMembersService {
                                  System.out.println("StudentId " + studentId + " not found");
 			}
 		} catch (IOException e) {
+			System.err.println(e);
 			// Ignore
 			// log.error("Error occured while getting student information based on studentId", e);
 		}
