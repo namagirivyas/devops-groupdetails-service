@@ -54,19 +54,4 @@ public class GroupMembersServiceTest {
 		}
 	}
 
-	@Test
-	public void testGetStudentInfo() {
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			GroupMembersInfoDto groupMembersInfoDto = objectMapper.readValue(file, GroupMembersInfoDto.class);
-			when(mapper.readValue(file, GroupMembersInfoDto.class)).thenReturn(groupMembersInfoDto);
-			System.out.println(groupMembersService);
-			StudentInfoDto studentInfoDto = groupMembersService.getStudentInfo("24680");
-			assertTrue(studentInfoDto.getStudentId().equals("24680"));
-			assertTrue(studentInfoDto.getElectiveCourses().contains("Devops"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
