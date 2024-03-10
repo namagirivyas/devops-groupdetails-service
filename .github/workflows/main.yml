@@ -49,3 +49,13 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '17'
+
+    - name: Clean Test with Gradle
+      run: |
+        chmod +x ./gradlew && 
+        ./gradlew clean test
+        
+      env:
+        GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+        GRADLE_USER_HOME: './gradle'
+        PAT: ${{env.GRADLE_TOKEN}}
