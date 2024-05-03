@@ -33,6 +33,27 @@ jobs:
         GRADLE_OPTS: '-Dorg.gradle.daemon=false'
         GRADLE_USER_HOME: './gradle'
         PAT: ${{env.GRADLE_TOKEN}}
+    
+    # Log in to DockerHub using secrets
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Build the Docker image
+    - name: Build Docker image
+      run: docker build -t groupmembers-service:latest .
+
+    # Tag the Docker image
+    - name: Tag Docker image
+      run: docker tag groupmembers-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/groupmembers-service:latest
+
+    # Push the Docker image to DockerHub
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/groupmembers-service:latest  
+    
+  
   test:
     runs-on: ubuntu-latest
     env:
