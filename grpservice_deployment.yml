@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groupmembers-service-depl
+  namespace: default
+  labels:
+    app: groupmembers-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: groupmembers-service-depl
+  template:
+    metadata:
+      labels:
+        app: groupmembers-service-depl
+    spec:
+      containers:
+      - name: groupmembers-service
+        image: 2023mt03168/groupmembers-service:latest
+        ports:
+        - containerPort: 8080
+---
+# Nodeport service to expose the application
+apiVersion: v1
+kind: Service
+metadata:
+  name: groupmembers-service
+  namespace: default
+spec:
+  selector:
+    app: groupmembers-service-depl
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30000
+  type: NodePort
