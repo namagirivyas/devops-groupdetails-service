@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: group-details-deployment
+  labels:
+    app: group-details
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: group-details
+  template:
+    metadata:
+      labels:
+        app: group-details
+    spec:
+      containers:
+      - name: group-details
+        image: group-details:v1
+        ports:
+        - containerPort: 80
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: group-details-rollout
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: group-details
+  strategy:
+    blueGreen:
+      activeService: group-details-service
+      previewService: group-details-preview-service
+      autoPromotionEnabled: true
+  template:
+    metadata:
+      labels:
+        app: group-details
+    spec:
+      containers:
+      - name: group-details
+        image: group-details:v2
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: group-details-service
+  namespace: default
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: group-details
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: group-details-preview-service
+  namespace: default
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: group-details
