@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: group-details
-        image: nginx:1.19
+        image: group-details:v11
         ports:
         - containerPort: 80
 ---
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: group-details
-        image: nginx:1.20
+        image: group-details:v12
         ports:
         - containerPort: 80
 ---
