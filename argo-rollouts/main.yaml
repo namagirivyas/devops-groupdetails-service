@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: group-details
-        image: group-details:v11
+        image: 2023mt03168/groupmembers-service:v11
         ports:
         - containerPort: 80
 ---
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: group-details
-        image: group-details:v12
+        image: 2023mt03168/groupmembers-service:v12
         ports:
         - containerPort: 80
 ---
