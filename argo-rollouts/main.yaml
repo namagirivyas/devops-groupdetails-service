@@ -55,7 +55,7 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 80
+    port: 9090
     targetPort: 8080
   selector:
     app: group-details
@@ -68,7 +68,7 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 80
+    port: 9091
     targetPort: 8080
   selector:
     app: group-details
